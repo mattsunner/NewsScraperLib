@@ -7,12 +7,13 @@ Author: Matthew Sunner, 2020
 from bs4 import BeautifulSoup
 import lxml
 import requests
+import pandas as pd
 import os.path
 from os import path
 import sqlite3
 
 
-def headlineGatherer(url, tag):
+def headlineGatherer(url, tag, className):
     """headlineGatherer: Function to return an array of headlines from a given URL and HTML tag.
 
     Args:
@@ -26,15 +27,20 @@ def headlineGatherer(url, tag):
     html_doc = response.text
     soup = BeautifulSoup(html_doc, 'lxml')
 
-    srcRes = soup.find_all(tag)
-    results = []
+    srcRes = soup.find_all(tag, {"class": className})
+    resultsList = []
     for r in srcRes:
-        results.append(r.get_text())
+        print(r)
+        resultsList.append(r.get_text())
 
-    return results
+    # resultsDf = pd.DataFrame(resultsList)
+
+    return resultsList
 
 
-def headlineStorer(filePath, headlines):
-    # if path.exists(filePath) == True:
-    #     conn = sqlite3.connect(filePath)
-    pass
+# def headlineStorer(filePath):
+#     if path.exists(filePath) == True:
+#         print('connected!')
+#     else:
+#         print('need db!')
+    
