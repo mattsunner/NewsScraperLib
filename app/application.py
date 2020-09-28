@@ -7,9 +7,9 @@ Author: Matthew Sunner, 2020
 from bs4 import BeautifulSoup
 import lxml
 import requests
-
-# class SiteParser(self, url):
-#     self.url = url
+import os.path
+from os import path
+import sqlite3
 
 
 def headlineGatherer(url, tag):
@@ -32,3 +32,9 @@ def headlineGatherer(url, tag):
         results.append(r.get_text())
 
     return results
+
+
+def headlineStorer(filePath, headlines):
+    # if path.exists(filePath) == True:
+    #     conn = sqlite3.connect(filePath)
+    pass
