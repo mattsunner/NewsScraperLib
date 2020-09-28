@@ -8,7 +8,8 @@ from application import headlineGatherer
 
 
 def main():
-    headlineGatherer('https://www.reuters.com/', 'h2')
+    x = headlineGatherer('https://www.reuters.com/', 'h3')
+    print(x)
 
 
 if __name__ == '__main__':

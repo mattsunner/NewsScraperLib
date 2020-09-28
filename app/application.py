@@ -17,6 +17,9 @@ def headlineGatherer(url, tag):
     html_doc = response.text
     soup = BeautifulSoup(html_doc, 'lxml')
 
-    res = soup.find_all(tag)
-    for r in res:
-        print(r.get_text())
+    srcRes = soup.find_all(tag)
+    results = []
+    for r in srcRes:
+        results.append(r.get_text())
+
+    return results
