@@ -11,9 +11,12 @@ import requests
 # class SiteParser(self, url):
 #     self.url = url
 
-url = 'https://www.reuters.com/'
-response = requests.get(url)
-html_doc = response.text
-soup = BeautifulSoup(html_doc, 'lxml')
 
-print(soup)
+def headlineGatherer(url, tag):
+    response = requests.get(url)
+    html_doc = response.text
+    soup = BeautifulSoup(html_doc, 'lxml')
+
+    res = soup.find_all(tag)
+    for r in res:
+        print(r.get_text())
