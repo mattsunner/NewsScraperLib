@@ -36,5 +36,19 @@ def headlineGatherer(url, tag, className):
     return resultsDf
 
 
-def headlineStorer(filePath):
-    pass
+def headlineStorer(dbFilePath, dfHeadline):
+    if path.exists(dbFilePath) == True:
+        conn = sqlite3.connect('headlineData.db')
+        dfHeadline.to_sql('headlines', conn, if_exists='replace', index=False)
+
+        conn.commit()
+        conn.close()
+    else:
+        conn = sqlite3.connect('headlineData.db')
+        c = conn.cursor()
+        c.execute('''CREATE TABLE headlines
+                    (headline text)''')
+        dfHeadline.to_sql('headlines', conn, if_exists='replace', index=False)
+
+        conn.commit()
+        conn.close()
