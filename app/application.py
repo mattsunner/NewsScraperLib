@@ -36,7 +36,5 @@ def headlineGatherer(url, tag, className):
     return resultsDf
 
 
-def headlineStorer(filePath, headlines):
-    # if path.exists(filePath) == True:
-    #     conn = sqlite3.connect(filePath)
+def headlineStorer(filePath):
     pass
