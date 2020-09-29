@@ -4,11 +4,11 @@ Reuters-Pipeline
 
 __version__ = '0.1.0'
 
-from application import headlineGatherer
+from application import headlineGatherer, headlineStorer
 
 
 def main():
-    print(headlineGatherer('https://www.reuters.com/', 'div', 'story-title'))
+    pass
 
 
 if __name__ == '__main__':
