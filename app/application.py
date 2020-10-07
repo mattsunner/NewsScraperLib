@@ -22,33 +22,45 @@ def headlineGatherer(url, tag, className):
         className (str): CSS Selector class for attribute(s) being gathered. Should be a subset of the provided tag.
 
     Returns:
-        DataFrame: Result of the function is an Pandas DataFrame of headline text gathered from the URL provided.
+        List: Result of the function is an list of headline text gathered from the URL provided.
     """
     response = requests.get(url)
     html_doc = response.text
     soup = BeautifulSoup(html_doc, 'lxml')
 
     srcRes = soup.find_all(tag, {'class': className})
-    resultsDf = pd.DataFrame(columns=['headline'])
-    for r in srcRes:
-        resultsDf = resultsDf.append({'headline': r}, ignore_index=True)
 
-    return resultsDf
+    results = []
+    for r in srcRes:
+        results.append((str(r.get_text())))
+
+    return results
 
 
 def headlineStorer(dbFilePath, dfHeadline):
+    """headlineStorer: Method to create/add headline list data into a SQLite3 database in the local filesystem.
+
+    Args:
+        dbFilePath (str): New or Existing name for the local database to be generated.
+        dfHeadline (obj): List object of headlines, ex.. output from headlineGatherer method.
+    """
     if path.exists(dbFilePath) == True:
-        conn = sqlite3.connect('headlineData.db')
-        dfHeadline.to_sql('headlines', conn, if_exists='replace', index=False)
+        conn = sqlite3.connect(dbFilePath)
+        c = conn.cursor()
+
+        for item in dfHeadline:
+            c.execute("INSERT INTO headlines(headline) VALUES(?)", (item,))
 
         conn.commit()
         conn.close()
     else:
-        conn = sqlite3.connect('headlineData.db')
+        conn = sqlite3.connect(dbFilePath)
         c = conn.cursor()
         c.execute('''CREATE TABLE headlines
                     (headline text)''')
-        dfHeadline.to_sql('headlines', conn, if_exists='replace', index=False)
+
+        for item in dfHeadline:
+            c.execute("INSERT INTO headlines(headline) VALUES(?)", (item,))
 
         conn.commit()
         conn.close()
