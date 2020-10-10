@@ -1,5 +1,5 @@
 """
-Reuters-Pipeline
+NewsScraperLib
 
 Author: Matthew Sunner, 2020
 """

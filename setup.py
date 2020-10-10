@@ -2,7 +2,7 @@ from distutils.core import setup
 import re
 
 with open('README.md') as fp:
-    long_description=fp.read()
+    long_description = fp.read()
 
 
 def find_version():
@@ -15,11 +15,11 @@ def find_version():
 
 
 setup(
-    name='Reuters-Pipeline',
+    name='NewsScraperLib',
     version=find_version(),
     author='Matthew Sunner',
     author_email='matt@mattsunner.com',
     license='LICENSE.txt',
-    description='Web scraping tool for reuters.com headlines and metadata.',
+    description='Web scraping library with a focus on news headline gathering.',
     long_description=long_description,
 )
