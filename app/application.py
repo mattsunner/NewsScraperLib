@@ -64,3 +64,24 @@ def headlineStorer(dbFilePath, dfHeadline):
 
         conn.commit()
         conn.close()
+
+
+def show_records(dbFilePath, selection):
+    conn = sqlite3.connect(dbFilePath)
+    c = conn.cursor()
+
+    c.execute("SELECT * FROM headlines WHERE headline LIKE '%'||?||'%'",
+              (selection,))
+
+    rows = c.fetchall()
+    return rows
+
+
+def show_all_records(dbFilePath):
+    conn = sqlite3.connect(dbFilePath)
+    c = conn.cursor()
+
+    c.execute("SELECT * FROM headlines")
+
+    rows = c.fetchall()
+    return rows
