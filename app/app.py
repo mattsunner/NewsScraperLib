@@ -56,8 +56,7 @@ def headlineStorer(dbFilePath, dfHeadline):
     else:
         conn = sqlite3.connect(dbFilePath)
         c = conn.cursor()
-        c.execute('''CREATE TABLE headlines
-                    (headline text)''')
+        c.execute('''CREATE TABLE headlines (headline text)''')
 
         for item in dfHeadline:
             c.execute("INSERT INTO headlines(headline) VALUES(?)", (item,))
