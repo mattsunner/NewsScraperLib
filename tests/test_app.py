@@ -1,9 +1,10 @@
-from application import headlineGatherer
+from app import headlineGatherer
 
 
-def test_headline_gatherer():
+def test_headlineGatherer():
     url = 'https://reuters.com'
     tag = 'h3'
     className = 'story-content'
 
-    assert headlineGatherer(url, tag, className) == True
+    # Assert that headlineGatherer returns a list
+    assert headlineGatherer(url, tag, className) == []
