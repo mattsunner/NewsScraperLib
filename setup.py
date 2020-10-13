@@ -22,4 +22,5 @@ setup(
     license='LICENSE.txt',
     description='Web scraping library with a focus on news headline gathering.',
     long_description=long_description,
+    packages=['app']
 )
