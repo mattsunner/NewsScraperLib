@@ -4,14 +4,15 @@ from os import path
 import sqlite3
 import pytest
 
+sample_headlines = [
+    ('Sample Headline #1'),
+    ('Sample Headline #2')
+]
+
 
 @pytest.fixture
 def database_setup():
     """ Fixture to set up the in-memory database with test data """
-    sample_headlines = [
-        ('Sample Headline #1'),
-        ('Sample Headline #2')
-    ]
 
     if path.exists('testing.db') == True:
         conn = sqlite3.connect('testing.db')
