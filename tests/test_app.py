@@ -1,4 +1,4 @@
-from app import headlineGatherer, headlineStorer, show_all_records
+from app import headlineGatherer, headlineStorer, show_all_records, show_records
 import os.path
 from os import path
 import sqlite3
@@ -26,7 +26,6 @@ def database_setup():
             c.execute("INSERT INTO headlines(headline) VALUES(?)", (item,))
 
         conn.commit()
-        conn.close()
 
         yield conn
 
@@ -51,3 +50,10 @@ def test_show_all_records():
     s = show_all_records('testing.db')
 
     assert len(s) == 2
+
+
+def test_show_records():
+
+    s = show_records('testing.db', '#1')
+
+    assert len(s) == 1
