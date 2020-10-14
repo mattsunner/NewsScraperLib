@@ -1,5 +1,5 @@
 """
-Reuters-Pipeline
+NewsScraperLib
 
 Author: Matthew Sunner, 2020
 """
@@ -56,11 +56,31 @@ def headlineStorer(dbFilePath, dfHeadline):
     else:
         conn = sqlite3.connect(dbFilePath)
         c = conn.cursor()
-        c.execute('''CREATE TABLE headlines
-                    (headline text)''')
+        c.execute('''CREATE TABLE headlines (headline text)''')
 
         for item in dfHeadline:
             c.execute("INSERT INTO headlines(headline) VALUES(?)", (item,))
 
         conn.commit()
         conn.close()
+
+
+def show_records(dbFilePath, selection):
+    conn = sqlite3.connect(dbFilePath)
+    c = conn.cursor()
+
+    c.execute("SELECT * FROM headlines WHERE headline LIKE '%'||?||'%'",
+              (selection,))
+
+    rows = c.fetchall()
+    return rows
+
+
+def show_all_records(dbFilePath):
+    conn = sqlite3.connect(dbFilePath)
+    c = conn.cursor()
+
+    c.execute("SELECT * FROM headlines")
+
+    rows = c.fetchall()
+    return rows
