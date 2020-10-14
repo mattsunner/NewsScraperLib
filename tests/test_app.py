@@ -30,6 +30,12 @@ def database_setup():
         yield conn
 
 
+def test_connection(database_setup):
+    c = database_setup
+
+    assert len(list(c.execute('SELECT * FROM headlines'))) == 2
+
+
 def test_headlineGatherer():
     url = 'https://reuters.com'
     tag = 'h3'
@@ -37,12 +43,6 @@ def test_headlineGatherer():
 
     # Assert that headlineGatherer returns a list
     assert headlineGatherer(url, tag, className) == []
-
-
-def test_connection(database_setup):
-    c = database_setup
-
-    assert len(list(c.execute('SELECT * FROM headlines'))) == 2
 
 
 def test_show_all_records():
