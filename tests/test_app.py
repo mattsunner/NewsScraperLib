@@ -1,4 +1,5 @@
 from app import headlineGatherer, headlineStorer, show_all_records, show_records
+import os
 import os.path
 from os import path
 import sqlite3
@@ -43,6 +44,22 @@ def test_headlineGatherer():
 
     # Assert that headlineGatherer returns a list
     assert headlineGatherer(url, tag, className) == []
+
+
+def test_headlineStorer():
+
+    headline_addition = ('Sample Headline #3', 'Sample Headline #4')
+
+    headlineStorer('file::memory:?cache=shared', headline_addition)
+
+    conn = sqlite3.connect('file::memory:?cache=shared')
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM headlines")
+    rows = cur.fetchall()
+
+    os.remove('file::memory:?cache=shared')
+
+    assert len(rows) == 2
 
 
 def test_show_all_records():
