@@ -11,6 +11,8 @@ import pandas as pd
 import os.path
 from os import path
 import sqlite3
+# MySQL connection requirement (to_mysql())
+import mysql.connector
 
 
 def headlineGatherer(url, tag, className):
@@ -84,3 +86,30 @@ def show_all_records(dbFilePath):
 
     rows = c.fetchall()
     return rows
+
+
+def to_mysql(host, user, password, database):
+    try:  # Connect to Existing Database
+        db = mysql.connector.connect(
+            host=host,
+            user=user,
+            password=password,
+            database=database
+        )
+
+        mycursor = mydb.cursor()
+
+        sql = "INSERT INTO headlines (headline) VALUES (%s)"
+        val = ("VALUE")
+        mycursor.execute(sql, val)
+
+    except:
+        db = mysql.connector.connect(
+            host=host,
+            user=user,
+            password=password
+        )
+
+    finally:
+        mydb.commit()
+        mydb.close()
