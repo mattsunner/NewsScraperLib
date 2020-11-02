@@ -8,3 +8,4 @@ __pycache__
 
 # Testing
 testing.db
+dbtesting.py
