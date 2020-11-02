@@ -1,9 +1,12 @@
-from app import headlineGatherer, headlineStorer, show_all_records, show_records
+from app import headlineGatherer, headlineStorer, show_all_records, show_records, add_to_mysql
 import os
 import os.path
 from os import path
+from os.path import dirname, join
+from dotenv import load_dotenv, find_dotenv
 import sqlite3
 import pytest
+import mysql.connector
 
 sample_headlines = [
     ('Sample Headline #1'),
@@ -74,3 +77,41 @@ def test_show_records():
     s = show_records('testing.db', '#1')
 
     assert len(s) == 1
+
+
+def test_add_to_mysql():
+    load_dotenv()
+    DATABASE_PASSWORD = os.environ.get("TESTING_DB_PW")
+
+    # Test Variables
+    host = 'Matthews-MacBook-Pro.local'
+    user = 'root'
+    password = DATABASE_PASSWORD
+    database = 'lib_test_testing'
+    values = ['headline #1', 'headline #2']
+
+    print(password)
+
+    db = mysql.connector.connect(
+        host=host,
+        user=user,
+        password=password,
+        database=database
+    )
+
+    # Test the function
+    add_to_mysql(host, user, password, database, values)
+
+    mycursor = db.cursor()
+
+    mycursor.execute("SELECT * FROM headlines")
+
+    myresult = mycursor.fetchall()
+
+    mycursor.execute("DELETE FROM headlines")
+
+    db.commit()
+
+    mycursor.close()
+
+    assert len(myresult) == len(values)
