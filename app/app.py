@@ -88,8 +88,17 @@ def show_all_records(dbFilePath):
     return rows
 
 
-def to_mysql(host, user, password, database):
-    try:  # Connect to Existing Database
+def add_to_mysql(host, user, password, database, values):
+    """add_to_mysql: Method to add headlines to MySQL database. This method does not create schemas or databases on the MySQL server.
+
+    Args:
+        host (str): Host name of MySQL server
+        user (str): Username used on MySQL server
+        password (str): Password used on MySQL server
+        database (str): Database name
+        values (list): Python list of content to add to the database
+    """
+    try:
         db = mysql.connector.connect(
             host=host,
             user=user,
@@ -97,19 +106,19 @@ def to_mysql(host, user, password, database):
             database=database
         )
 
-        mycursor = mydb.cursor()
+        mycursor = db.cursor()
+        add_values = values
+        for value in add_values:
+            sql = "INSERT INTO headlines (headline) VALUES (%s)"
 
-        sql = "INSERT INTO headlines (headline) VALUES (%s)"
-        val = ("VALUE")
-        mycursor.execute(sql, val)
+            val = value
 
-    except:
-        db = mysql.connector.connect(
-            host=host,
-            user=user,
-            password=password
-        )
+            mycursor.execute(sql, (val,))
+
+        db.commit()
+
+    except ValueError as e:
+        print(e)
 
     finally:
-        mydb.commit()
-        mydb.close()
+        db.close()
