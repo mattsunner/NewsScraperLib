@@ -68,6 +68,15 @@ def headlineStorer(dbFilePath, dfHeadline):
 
 
 def show_records(dbFilePath, selection):
+    """show_records: Method to show all records that are present in the local SQLite3 database
+
+    Args:
+        dbFilePath (str): Name of the local databaase
+        selection (str): Parameter to pass to the "WHERE" clause in the SQL statement
+
+    Returns:
+        object: Python object (list) containing the query results
+    """
     conn = sqlite3.connect(dbFilePath)
     c = conn.cursor()
 
@@ -79,6 +88,14 @@ def show_records(dbFilePath, selection):
 
 
 def show_all_records(dbFilePath):
+    """show_all_records: Method to return all records in the local SQLite3 database instance.
+
+    Args:
+        dbFilePath (str): Name of the local database
+
+    Returns:
+        object: Python object (list) containing the query results
+    """
     conn = sqlite3.connect(dbFilePath)
     c = conn.cursor()
 
