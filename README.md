@@ -12,9 +12,17 @@ This library is freely distributed under the MIT license. Please see the full li
 
 ## Using the Library
 
-The library is built with two main methods at this time. `headlineGather()` & `headlineStorer()`. `headlineGatherer()` is the main method used to scrape websites and return data in the form of a list. This list can then be passed in as one of the arguments to `headlineGatherer()` in order to store the data in a SQLite3 database on the local filesystem.
+To use the library in it's current unstable form, follow the steps below:
+
+1. Clone the repo to your local machine
+2. Install the library to your local `PATH` using pip
+3. Import the package `app` to your project & use as normal (Stable release will contain a full package name)
+
+Full library method documentation can be found [here](./API_Documentation.md)
 
 ## Example
+
+Below is sample code that would scrape the Reuters website, pull all headlines with the CSS selector 'h3' as well as a class name of 'story-title'. HeadlineStorer would then store these headlines in an existing SQLite database, or would create one if one did not exist.
 
 ```
 from application import headlineGatherer, headlineStorer
