@@ -5,6 +5,7 @@ venv/
 .DS_Store/
 __pycache__
 .pytest_cache
+.env
 
 # Testing
 testing.db
